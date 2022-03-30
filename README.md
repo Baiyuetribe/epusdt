@@ -63,6 +63,16 @@ Epusdt
 ### 流程图：
 ![Implementation principle](wiki/img/implementation_principle.jpg)
 
+## 打赏
+如果该项目对您有所帮助，希望可以请我喝一杯咖啡☕️
+```
+Usdt(trc20)打赏地址: TNEns8t9jbWENbStkQdVQtHMGpbsYsQjZK
+```
+<img src="wiki/img/usdt_thanks.jpeg" width = "300" height = "400" alt="usdt扫码打赏"/>
+
+
+
+
 ## 声明
 `Epusdt`为开源的产品，仅用于学习交流使用！       
 不可用于任何违反中华人民共和国(含台湾省)或使用者所在地区法律法规的用途。           

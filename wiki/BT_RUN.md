@@ -20,9 +20,10 @@
 #### 1.手动下载导入
 
 数据库地址:https://github.com/assimon/epusdt/blob/master/sql/v0.0.1.sql
-
 ![导入Sql](img/sql.png)
+
 #### 2.使用phpMyAdmin导入
+使用文本编辑器打开`.sql`文件，如下：      
 ```sql
 -- auto-generated definition
 create table orders
@@ -68,6 +69,7 @@ create table wallet_address
 create index wallet_address_token_index
     on wallet_address (token);
 ```
+复制-粘贴至`phpmyadmin`的SQL面板，然后执行       
 ![导入Sql](img/run_sql.png)
 
 ### 三、配置Epusdt

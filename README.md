@@ -44,6 +44,9 @@ Epusdt
 ## 已适配系统插件
 - 独角数卡[插件地址](plugins/dujiaoka)
 
+## 加入交流/意见反馈
+- `Epusdt`频道[https://t.me/epusdt](https://t.me/epusdt)
+- `Epusdt`交流群组[https://t.me/epusdt_group](https://t.me/epusdt_group)
 
 ## 设计实现
 `Epusdt`的实现方式与其他项目原理类似，都是通过监听`trc20`网络的api或节点，      

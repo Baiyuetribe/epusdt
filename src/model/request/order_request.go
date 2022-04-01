@@ -6,7 +6,7 @@ import "github.com/gookit/validate"
 type CreateTransactionRequest struct {
 	OrderId     string  `json:"order_id" validate:"required|maxLen:32"`
 	Amount      float64 `json:"amount" validate:"required|isFloat|gt:0.01"`
-	NotifyUrl   string  `json:"notify_url" validate:"required|isFullURL"`
+	NotifyUrl   string  `json:"notify_url" validate:"required"`
 	Signature   string  `json:"signature"  validate:"required"`
 	RedirectUrl string  `json:"redirect_url"`
 }

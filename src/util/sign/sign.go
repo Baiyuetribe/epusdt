@@ -51,7 +51,6 @@ func MapToParams(params map[string]interface{}) (string, error) {
 		if k == "signature" {
 			continue
 		}
-		// 去除冗余未赋值struct
 		if v == nil {
 			continue
 		}
@@ -99,6 +98,10 @@ func MapToParams(params map[string]interface{}) (string, error) {
 			fv = string(v.([]byte))
 		default:
 			return "", errors.New("signature marshal error")
+		}
+		// 空值不参与签名
+		if fv == "" {
+			continue
 		}
 		tempArr = append(tempArr, k+"="+fv)
 	}

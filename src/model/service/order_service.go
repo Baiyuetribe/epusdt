@@ -13,6 +13,7 @@ import (
 	"github.com/assimon/luuu/mq/handle"
 	"github.com/assimon/luuu/telegram"
 	"github.com/assimon/luuu/util/constant"
+	"github.com/assimon/luuu/util/math"
 	"github.com/golang-module/carbon/v2"
 	"github.com/gookit/goutil/mathutil"
 	"github.com/hibiken/asynq"
@@ -23,23 +24,30 @@ import (
 	"time"
 )
 
+const (
+	CnyMinimumPaymentAmount  = 0.01  // cny最低支付金额
+	UsdtMinimumPaymentAmount = 0.001 // usdt最低支付金额
+)
+
 var gCreateTransactionLock sync.Mutex
 
 // CreateTransaction 创建订单
 func CreateTransaction(req *request.CreateTransactionRequest) (*response.CreateTransactionResponse, error) {
 	gCreateTransactionLock.Lock()
 	defer gCreateTransactionLock.Unlock()
-	// 汇率计算金额
-	rmb := decimal.NewFromFloat(req.Amount)
-	rate := decimal.NewFromFloat(config.GetUsdtRate())
-	amount := rmb.Div(rate).InexactFloat64()
-	actualAmountStr := fmt.Sprintf("%.4f", amount)
-	actualAmountFloat, err := strconv.ParseFloat(actualAmountStr, 64)
-	if err != nil {
-		return nil, err
+	decimalCnyMiniAmount := decimal.NewFromFloat(CnyMinimumPaymentAmount)
+	decimalUsdtMiniAmount := decimal.NewFromFloat(UsdtMinimumPaymentAmount)
+	payAmount := math.MustParsePrecFloat64(req.Amount, 2)
+	// 按照汇率转化USDT
+	decimalPayAmount := decimal.NewFromFloat(payAmount)
+	decimalRate := decimal.NewFromFloat(config.GetUsdtRate())
+	decimalUsdt := decimalPayAmount.Div(decimalRate)
+	// cny 是否可以满足最低支付金额
+	if decimalPayAmount.Cmp(decimalCnyMiniAmount) == -1 {
+		return nil, constant.PayAmountErr
 	}
-	// 是否可以满足最低支付金额
-	if actualAmountFloat <= 0 {
+	// Usdt是否可以满足最低支付金额
+	if decimalUsdt.Cmp(decimalUsdtMiniAmount) == -1 {
 		return nil, constant.PayAmountErr
 	}
 	// 已经存在了的交易

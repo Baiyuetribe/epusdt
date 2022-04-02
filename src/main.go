@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"github.com/assimon/luuu/bootstrap"
 	"github.com/assimon/luuu/config"
+	"github.com/assimon/luuu/util/math"
 	"github.com/gookit/color"
 )
 
 func main() {
+	fmt.Println(math.MustParsePrecFloat64(0, 2))
 	defer func() {
 		if err := recover(); err != nil {
 			color.Error.Println("[Start Server Err!!!] ", err)
